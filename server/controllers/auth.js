@@ -27,7 +27,7 @@ export const login= async(req,res)=>{
          return res.status(404).json({message:"User Don't Exists."})
       }
       const isPasswordCrt=await bcrypt.compare(password,existinguser.password);
-      if(isPasswordCrt){
+      if(!isPasswordCrt){
         return res.status(400).json({message:"Invalid Credential"})
       }
       const token=jwt.sign({email:existinguser.email,id:existinguser._id},process.env.JWT_SECRET, {expiresIn:'1h'});
